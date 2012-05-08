@@ -131,6 +131,7 @@ module ActiveMerchant #:nodoc:
       def query(vault_id, options = {})
         post = {}
         options.merge!({:vault_id => vault_id, :operation => secure_profile_action(:query)})
+        add_secure_profile_query_variables(post,options)
         commit(post, true)
       end
       
