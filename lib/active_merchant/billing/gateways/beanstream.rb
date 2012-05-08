@@ -127,6 +127,13 @@ module ActiveMerchant #:nodoc:
         @interac ||= BeanstreamInteracGateway.new(@options)
       end
       
+      # Added support for query payment profile
+      def query(vault_id, options = {})
+        post = {}
+        options.merge!({:vault_id => vault_id, :operation => secure_profile_action(:query)})
+        commit(post, true)
+      end
+      
       # To match the other stored-value gateways, like TrustCommerce,
       # store and unstore need to be defined
       def store(credit_card, options = {})
