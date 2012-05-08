@@ -20,7 +20,8 @@ module ActiveMerchant #:nodoc:
 
       PROFILE_OPERATIONS = {
         :new => 'N',
-        :modify => 'M'
+        :modify => 'M',
+        :query => 'Q'
       }
 
       CVD_CODES = {
@@ -217,6 +218,14 @@ module ActiveMerchant #:nodoc:
         
         # The account number of the consumer’s bank account.  Required for both Canadian and US dollar EFT transactions.
         post[:accountNumber] = check.account_number
+      end
+      
+      def add_secure_profile_query_variables(post, options = {})
+        post[:serviceVersion] = SP_SERVICE_VERSION
+        
+        post[:operationType] = options[:operation]
+        post[:customerCode] = options[:vault_id]
+        post[:trnOrderNumber] = options[:order_id]
       end
       
       def add_secure_profile_variables(post, options = {})
